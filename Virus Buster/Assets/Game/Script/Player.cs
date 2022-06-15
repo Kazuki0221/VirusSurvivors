@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     int maxSize = 100;
 
     [SerializeField] GameObject skill = null;
+    Vector2 skillArea;
     [SerializeField] Image gauge;
     public bool activeSkillSelect = false;
     public static float skillTime = 5f;
@@ -66,13 +67,14 @@ public class Player : MonoBehaviour
         currentGauge = 0;
         gauge.fillAmount = 0;
         skill.GetComponent<Heat>();
+        skillArea = skill.transform.localScale;
         skill.SetActive(false);
         anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if(GameController.minutes >= 0 && GameController.seconds >= 0 && activeSkillSelect == false)
+        if(GameController.minutes >= 0 && GameController.seconds >= 0 && activeSkillSelect == false && Heart.currentHp > 0)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -89,11 +91,13 @@ public class Player : MonoBehaviour
                 timer -= shootTime;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && gauge.fillAmount == 1)
+            if (Input.GetKeyDown(KeyCode.Space) && gauge.fillAmount >= 1)
             {
                 skill.SetActive(true);
                 gauge.fillAmount = 0;
                 currentGauge = 0;
+                text.text = $"{100 * gauge.fillAmount}%";
+
             }
         }
         else
@@ -163,6 +167,12 @@ public class Player : MonoBehaviour
                 text.text = $"{100 * gauge.fillAmount}%";
             }
         }
+        if(collision.gameObject.tag == "Heal")
+        {
+            currentHp = hp;
+            hpBar.value = (float)currentHp / (float)hp;
+            Destroy(collision.gameObject);
+        }
     }
 
     public void AddExp(int exp)
@@ -187,6 +197,8 @@ public class Player : MonoBehaviour
     public void UpGauge()
     {
         addGaugeAmount++;
+        skillArea += Vector2.one;
+        skill.transform.localScale = Vector3.one;
         activeSkillSelect = false;
     }
 

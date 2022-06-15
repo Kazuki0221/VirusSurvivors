@@ -58,8 +58,18 @@ public class Bullet : MonoBehaviour
             vec = e.transform.position - gameObject.transform.position; 
             if(vec.magnitude < 1.0f)
             {
-                var exp = FindObjectOfType<GameController>().expObj;
-                Instantiate(exp, e.transform.position, Quaternion.identity);
+
+                var rand = Random.Range(1, 100);
+                if(rand <= 95)
+                {
+                    var exp = FindObjectOfType<GameController>().expObj;
+                    Instantiate(exp, e.transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    var heal = FindObjectOfType<GameController>().healObj;
+                    Instantiate(heal, e.transform.position, Quaternion.identity);
+                }
                 e.Damage();
                 Destroy();
                 break;
@@ -67,7 +77,7 @@ public class Bullet : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if(timer > 10.0f)
+        if(timer > 5.0f)
         {
             Destroy();
         }

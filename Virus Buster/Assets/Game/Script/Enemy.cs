@@ -18,11 +18,14 @@ public class Enemy : MonoBehaviour
     {
 
         if (!isActive) return;
-        Vector3 sub = GameManager.Heart.transform.position - transform.position;
-        sub.Normalize();
+        if(Heart.currentHp > 0)
+        {
+            Vector3 sub = GameManager.Heart.transform.position - transform.position;
+            sub.Normalize();
 
-        transform.position += sub * speed * Time.deltaTime;
-        transform.rotation = Quaternion.FromToRotation(Vector3.up, sub);
+            transform.position += sub * speed * Time.deltaTime;
+            transform.rotation = Quaternion.FromToRotation(Vector3.up, sub);
+        }
 
     }
 

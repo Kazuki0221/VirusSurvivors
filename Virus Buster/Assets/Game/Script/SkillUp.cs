@@ -28,7 +28,9 @@ public class SkillUp : MonoBehaviour
         var gameController = FindObjectOfType<GameController>();
         foreach(var e in Spawner.eList)
         {
-            e.speed = gameController.remainESpeed;
+            //Debug.Log("a");
+
+            e.speed = 3;
         }
     }
     public void PlayerSpeed()

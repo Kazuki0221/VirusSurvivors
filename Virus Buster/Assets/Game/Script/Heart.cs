@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Heart : MonoBehaviour
 {
     int maxHP = 100;
-    int currentHp;
+    public static int currentHp;
     Rigidbody2D rb = default;
 
     [SerializeField] Slider slider = default;

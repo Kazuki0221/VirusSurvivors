@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Heat : MonoBehaviour
 {
-    private void OnEnable()
+
+    private void OnDisable()
     {
         Player.skillTime = 5f;
     }
@@ -26,7 +27,7 @@ public class Heat : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             var e = collision.gameObject.GetComponent<Enemy>();
-            e.Damage();
+            e.Destroy();
             e.transform.position = new Vector2(100, 100);
         }
     }

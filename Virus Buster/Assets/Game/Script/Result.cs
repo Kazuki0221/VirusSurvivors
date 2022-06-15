@@ -16,8 +16,9 @@ public class Result : MonoBehaviour
         scoreResult.text = $"Score   {GameController.score}";
     }
 
-    void Update()
+
+    public void ToTitle()
     {
-        
+        SceneManager.LoadScene("Title");
     }
 }

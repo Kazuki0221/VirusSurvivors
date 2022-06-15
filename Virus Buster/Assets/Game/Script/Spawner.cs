@@ -51,12 +51,15 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > 0.05f)
+        if (Heart.currentHp > 0)
         {
-            Spawn();
+            timer += Time.deltaTime;
+            if (timer > 0.1f)
+            {
+                Spawn();
 
-            timer -= 0.05f;
+                timer -= 0.1f;
+            }
         }
     }
 
