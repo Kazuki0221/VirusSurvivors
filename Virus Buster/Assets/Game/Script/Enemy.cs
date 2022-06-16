@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     {
 
         if (!isActive) return;
-        if(Heart.currentHp > 0)
+        if (Heart.currentHp > 0 && Spawner.zannki >= 0 && Player.currentHp > 0)
         {
             Vector3 sub = GameManager.Heart.transform.position - transform.position;
             sub.Normalize();

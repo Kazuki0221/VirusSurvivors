@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     float fullGauge = 100f;
 
     //UI
-    int currentHp;
+    public static int currentHp;
     public Slider hpBar;
     [SerializeField]TextMeshProUGUI text;
 
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(GameController.minutes >= 0 && GameController.seconds >= 0 && activeSkillSelect == false && Heart.currentHp > 0)
+        if(GameController.minutes >= 0 && GameController.seconds >= 0 && activeSkillSelect == false && Heart.currentHp > 0  && Spawner.zannki >= 0)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -104,7 +104,6 @@ public class Player : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
-        
         
 
         cam.Follow = this.transform;
@@ -149,9 +148,10 @@ public class Player : MonoBehaviour
             {
                 currentHp--;
             }
-            else if(currentHp <= 0 && expLevel.Exp >= 0)
+            else if(currentHp <= 0 && expLevel.Exp >= 0 && Spawner.zannki > 0)
             {
                 AddExp(-50);
+                ReSpawn();
             }
             hpBar.value = (float)currentHp / (float)hp;
         }
@@ -169,9 +169,23 @@ public class Player : MonoBehaviour
         }
         if(collision.gameObject.tag == "Heal")
         {
-            currentHp = hp;
+            currentHp += hp / 3;
+            if(currentHp > hp)
+            {
+                currentHp = hp;
+            }
             hpBar.value = (float)currentHp / (float)hp;
             Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.tag == "GaugeHeal")
+        {
+            currentGauge += fullGauge / 5;
+            if(currentGauge > fullGauge)
+            {
+                currentGauge = fullGauge;
+            }
+            gauge.fillAmount = currentGauge / fullGauge;
+            text.text = $"{100 * gauge.fillAmount}%";
         }
     }
 
@@ -200,6 +214,17 @@ public class Player : MonoBehaviour
         skillArea += Vector2.one;
         skill.transform.localScale = Vector3.one;
         activeSkillSelect = false;
+    }
+
+    public void ReSpawn()
+    {
+        Spawner.zannki--;
+        currentHp = hp;
+        hpBar.value = 1;
+        currentGauge = 0;
+        gauge.fillAmount = 0;
+        text.text = $"{100 * gauge.fillAmount}";
+        transform.position = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
     }
 
 }

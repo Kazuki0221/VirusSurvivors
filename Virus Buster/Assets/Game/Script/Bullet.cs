@@ -65,6 +65,11 @@ public class Bullet : MonoBehaviour
                     var exp = FindObjectOfType<GameController>().expObj;
                     Instantiate(exp, e.transform.position, Quaternion.identity);
                 }
+                else if(rand > 95 && rand <= 98)
+                {
+                    var gHeal = FindObjectOfType<GameController>().gaugeHealObj;
+                    Instantiate(gHeal, e.transform.position, Quaternion.identity);
+                }
                 else
                 {
                     var heal = FindObjectOfType<GameController>().healObj;

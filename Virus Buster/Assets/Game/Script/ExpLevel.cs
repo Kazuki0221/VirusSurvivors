@@ -19,7 +19,14 @@ public class ExpLevel
 
     public void AddExp(int exp, int[] expArray)
     {
-        _exp = Mathf.Clamp(_exp + exp, 0, expArray[expArray.Length - 1]);
+        if(_exp >= 0)
+        {
+            _exp = Mathf.Clamp(_exp + exp, 0, expArray[expArray.Length - 1]);
+        }
+        else
+        {
+            _exp = 0;
+        }
         UpdateLevel(expArray);
         UpdateRemainExp(expArray);
     }

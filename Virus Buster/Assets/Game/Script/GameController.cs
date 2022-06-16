@@ -12,16 +12,17 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject skillSelect = null;
     public GameObject expObj = null;
     public GameObject healObj;
+    public GameObject gaugeHealObj;
     //ObjectPool<GameObject> expPool;
 
     public static float minutes = 30;
     public static float seconds = 0;
     public static int score = 0;
     TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI zannkiText;
     Player player;
 
     [SerializeField] GameObject fade;
-    Color color = new Color(255,85,0,120);
     void Start()
     {
         text = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
@@ -33,7 +34,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (Heart.currentHp > 0)
+        if (Heart.currentHp > 0 && Spawner.zannki >= 0 && Player.currentHp > 0)
         {
             if (player.expLevel.UpLevel())
             {
@@ -59,9 +60,10 @@ public class GameController : MonoBehaviour
             }
 
             text.text = $"{minutes}:{seconds.ToString("00")}";
+            zannkiText.text = $"BeesCount:{Spawner.zannki}";
         }
 
-        if(Heart.currentHp <= 0 || (minutes <= 0 && seconds <= 0))
+        if(Heart.currentHp <= 0 || (minutes <= 0 && seconds <= 0) || (Spawner.zannki == 0 && Player.currentHp <= 0))
         {
             fade.SetActive(true);
         }

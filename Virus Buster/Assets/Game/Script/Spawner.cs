@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject playerObj = null;
+    public static int zannki = 3;
 
     [SerializeField] GameObject enemy;
     Vector3 poolPos = new Vector3(0, 0, 0);
@@ -51,7 +52,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (Heart.currentHp > 0)
+        if (Heart.currentHp > 0 && zannki >= 0 && Player.currentHp > 0)
         {
             timer += Time.deltaTime;
             if (timer > 0.1f)
