@@ -35,7 +35,6 @@ public class Bullet : MonoBehaviour
             {
                 target = e;
                 len = vec.magnitude;
-
             }
 
             if (!target) return;

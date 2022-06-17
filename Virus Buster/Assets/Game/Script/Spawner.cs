@@ -13,16 +13,12 @@ public class Spawner : MonoBehaviour
     float rad = 0.0f;
     float timer = 0.0f;
 
-
     public ObjectPool<GameObject> objectPool;
 
-    
     public static List<Enemy> eList = new List<Enemy>();
 
     int defaultCapacity = 10;
     int maxSize = 10;
-
-
     private void Awake()
     {
         objectPool = new ObjectPool<GameObject>(
@@ -41,23 +37,25 @@ public class Spawner : MonoBehaviour
     {
         PlayerSpawn();
 
-        //SetCapacity(defaultCapacity);
         GameManager.Instance.SetList();
-        //for (int i = 0; i < 5; ++i)
-        //{
-        //    Spawn();
-        //}
-        Spawn();
+        for (int i = 0; i < 5; ++i)
+        {
+            Spawn();
+        }
     }
 
     void Update()
     {
-        if (Heart.currentHp > 0 && zannki >= 0 && Player.currentHp > 0)
+        if (Heart.currentHp > 0 && zannki >= 0 && Player.currentHp > 0 && FindObjectOfType<Player>().activeSkillSelect == false)
         {
             timer += Time.deltaTime;
             if (timer > 0.1f)
             {
-                Spawn();
+                var gc = FindObjectOfType<GameController>();
+                for(int i = 0; i < gc.wabe; i++)
+                {
+                    Spawn();
+                }
 
                 timer -= 0.1f;
             }
@@ -84,7 +82,6 @@ public class Spawner : MonoBehaviour
     {
         go.SetActive(true);
         eList.Add(go.GetComponent<Enemy>());
-
     }
 
     //プールからオブジェクトが解放されるとき呼び出される
@@ -103,8 +100,8 @@ public class Spawner : MonoBehaviour
     void Spawn()
     {
         var script = objectPool.Get();
-        poolPos.x = GameManager.Player.transform.position.x + 100 * Mathf.Cos(rad);
-        poolPos.y = GameManager.Player.transform.position.y + 100 * Mathf.Sin(rad);
+        poolPos.x = GameManager.Player.transform.position.x + 50 * Mathf.Cos(rad);
+        poolPos.y = GameManager.Player.transform.position.y + 50 * Mathf.Sin(rad);
         script.transform.position = poolPos;
         rad += 1f;
     }

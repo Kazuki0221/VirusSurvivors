@@ -23,16 +23,7 @@ public class SkillUp : MonoBehaviour
             list.RemoveAt(index);
         }
     }
-    private void OnDisable()
-    {
-        var gameController = FindObjectOfType<GameController>();
-        foreach(var e in Spawner.eList)
-        {
-            //Debug.Log("a");
 
-            e.speed = 3;
-        }
-    }
     public void PlayerSpeed()
     {
         FindObjectOfType<Player>().UpSpeed();

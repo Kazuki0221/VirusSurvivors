@@ -16,9 +16,8 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-
         if (!isActive) return;
-        if (Heart.currentHp > 0 && Spawner.zannki >= 0 && Player.currentHp > 0)
+        if ((Heart.currentHp > 0 || (Spawner.zannki >= 0 && Player.currentHp > 0)) && FindObjectOfType<Player>().activeSkillSelect == false)
         {
             Vector3 sub = GameManager.Heart.transform.position - transform.position;
             sub.Normalize();
@@ -26,7 +25,6 @@ public class Enemy : MonoBehaviour
             transform.position += sub * speed * Time.deltaTime;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, sub);
         }
-
     }
 
     public void Damage()

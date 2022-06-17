@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour
     public GameObject expObj = null;
     public GameObject healObj;
     public GameObject gaugeHealObj;
-    //ObjectPool<GameObject> expPool;
 
     public static float minutes = 30;
     public static float seconds = 0;
@@ -23,6 +22,7 @@ public class GameController : MonoBehaviour
     Player player;
 
     [SerializeField] GameObject fade;
+    public int wabe = 1;
     void Start()
     {
         text = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
                 player.activeSkillSelect = true;
 
             }
-            if (!skillSelect.activeSelf)
+            if (skillSelect.activeSelf == false)
             {
                 if (seconds <= 0)
                 {
@@ -51,13 +51,7 @@ public class GameController : MonoBehaviour
                 }
                 seconds -= Time.deltaTime;
             }
-            else
-            {
-                foreach (var e in Spawner.eList)
-                {
-                    e.speed = 0;
-                }
-            }
+            
 
             text.text = $"{minutes}:{seconds.ToString("00")}";
             zannkiText.text = $"BeesCount:{Spawner.zannki}";
@@ -66,6 +60,11 @@ public class GameController : MonoBehaviour
         if(Heart.currentHp <= 0 || (minutes <= 0 && seconds <= 0) || (Spawner.zannki == 0 && Player.currentHp <= 0))
         {
             fade.SetActive(true);
+        }
+
+        if((int)minutes % 5 == 0 && (int)seconds == 0)
+        {
+            wabe++;
         }
     }
 

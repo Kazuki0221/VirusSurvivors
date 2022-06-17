@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] int hp = 10;
     public float speed = 0.1f;
     [SerializeField] float shootTime = 0.3f;
-    
+
     Rigidbody2D rb = default;
     float timer = 0.0f;
 
@@ -23,14 +23,16 @@ public class Player : MonoBehaviour
     int defaultCapacity = 100;
     int maxSize = 100;
 
+    //スキル関連
     [SerializeField] GameObject skill = null;
     Vector2 skillArea;
     [SerializeField] Image gauge;
     public bool activeSkillSelect = false;
-    public static float skillTime = 5f;
+    public static float skillTime = 10f;
     [SerializeField] float addGaugeAmount = 1.0f;
     float currentGauge = 0f;
     float fullGauge = 100f;
+    public static GameObject cutIn;
 
     //UI
     public static int currentHp;
@@ -70,6 +72,8 @@ public class Player : MonoBehaviour
         skillArea = skill.transform.localScale;
         skill.SetActive(false);
         anim = GetComponent<Animator>();
+        cutIn = GameObject.Find("CutIn");
+        cutIn.SetActive(false);
     }
 
     void Update()
@@ -93,12 +97,10 @@ public class Player : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) && gauge.fillAmount >= 1)
             {
-                skill.SetActive(true);
-                gauge.fillAmount = 0;
-                currentGauge = 0;
-                text.text = $"{100 * gauge.fillAmount}%";
-
+                Skill();
             }
+
+
         }
         else
         {
@@ -155,11 +157,11 @@ public class Player : MonoBehaviour
             }
             hpBar.value = (float)currentHp / (float)hp;
         }
+        //経験値
         if(collision.gameObject.tag == "Exp")
         {
             AddExp(1);
             Destroy(collision.gameObject);
-            Debug.Log($"Level:{expLevel.Level}, Exp:{expLevel.Exp}");
             if (gauge.fillAmount < 1 && skillTime >= 5f)
             {
                 currentGauge += addGaugeAmount;
@@ -167,6 +169,7 @@ public class Player : MonoBehaviour
                 text.text = $"{100 * gauge.fillAmount}%";
             }
         }
+        //回復
         if(collision.gameObject.tag == "Heal")
         {
             currentHp += hp / 3;
@@ -177,6 +180,7 @@ public class Player : MonoBehaviour
             hpBar.value = (float)currentHp / (float)hp;
             Destroy(collision.gameObject);
         }
+        //スキルゲージアップ
         if(collision.gameObject.tag == "GaugeHeal")
         {
             currentGauge += fullGauge / 5;
@@ -186,6 +190,7 @@ public class Player : MonoBehaviour
             }
             gauge.fillAmount = currentGauge / fullGauge;
             text.text = $"{100 * gauge.fillAmount}%";
+            Destroy(collision.gameObject);
         }
     }
 
@@ -212,7 +217,7 @@ public class Player : MonoBehaviour
     {
         addGaugeAmount++;
         skillArea += Vector2.one;
-        skill.transform.localScale = Vector3.one;
+        skill.transform.localScale = skillArea;
         activeSkillSelect = false;
     }
 
@@ -225,6 +230,14 @@ public class Player : MonoBehaviour
         gauge.fillAmount = 0;
         text.text = $"{100 * gauge.fillAmount}";
         transform.position = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+    }
+
+    void Skill()
+    {
+        skill.SetActive(true);
+        gauge.fillAmount = 0;
+        currentGauge = 0;
+        text.text = $"{100 * gauge.fillAmount}%";
     }
 
 }

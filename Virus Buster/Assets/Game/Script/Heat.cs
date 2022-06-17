@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Heat : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        Player.cutIn.SetActive(true);
+    }
 
     private void OnDisable()
     {
-        Player.skillTime = 5f;
+        Player.skillTime = 10f;
+        //Player.cutIn.SetActive(false);
     }
 
     void Update()
@@ -18,6 +23,10 @@ public class Heat : MonoBehaviour
             if (Player.skillTime <= 0)
             {
                 this.gameObject.SetActive(false);
+            }
+            if(10 - Player.skillTime > 1)
+            {
+                Player.cutIn.SetActive(false);
             }
         }
     }
