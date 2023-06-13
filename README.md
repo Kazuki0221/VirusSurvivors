@@ -1,4 +1,4 @@
-# タイトル「Bee　Vs　Wasp」
+# タイトル「Bee Vs Wasp」
 
 ## 開発環境
 Unity 2021.3.0f<br>
