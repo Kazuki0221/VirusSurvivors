@@ -10,4 +10,7 @@ Sorcetree<br>
 プレイ人数：1人
 
 # 企画書
- https://drive.google.com/file/d/1QMA2XHmWmZwlOGwAeYSBsncGDtZdVc0x/view?usp=sharing
+ https://drive.google.com/file/d/1tMjg0ZIU3WPfLLEQQZ0f-5zKm65KPlTD/view?usp=sharing
+
+# プレイ動画
+ https://drive.google.com/file/d/1c6iV4ziaOfRjv52kTFW5JzUqvDI1OxGT/view?usp=sharing
